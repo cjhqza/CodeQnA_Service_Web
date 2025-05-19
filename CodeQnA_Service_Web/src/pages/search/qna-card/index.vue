@@ -10,7 +10,7 @@
                             <el-tag class="type" type="danger" effect="plain" v-else round>文章</el-tag>
                             <div class="title" :title="props.qnaInfo.title" @click="goKnowledge(props.qnaInfo.id)">{{ props.qnaInfo.title }}</div>
                         </div>
-                        <div class="author">{{ props.qnaInfo.userName }}</div>
+                        <div class="author" @click="goUser(props.qnaInfo.userId)">{{ props.qnaInfo.userName }}</div>
                     </div>
                     <div class="top-bottom">
                         <div class="tags">
@@ -44,6 +44,10 @@ let props = defineProps(['qnaInfo']);
 
 const goKnowledge = (knocode: number) => {
     $router.push({ path: '/knowledge', query: { knocode: knocode } });
+}
+
+const goUser = (usercode: number) => {
+    $router.push({path: '/user/release', query: { usercode: usercode }});
 }
 
 </script>

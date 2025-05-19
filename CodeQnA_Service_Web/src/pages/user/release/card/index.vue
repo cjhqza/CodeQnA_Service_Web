@@ -8,9 +8,9 @@
                             <el-tag class="type" type="success" effect="plain" v-if="props.knowledgeInfo.type === 0"
                                 round>问答贴</el-tag>
                             <el-tag class="type" type="danger" effect="plain" v-else round>文章</el-tag>
-                            <div class="title" :title="props.knowledgeInfo.title">{{ props.knowledgeInfo.title }}</div>
+                            <div class="title" :title="props.knowledgeInfo.title" @click="goKnowledge(props.knowledgeInfo.id)">{{ props.knowledgeInfo.title }}</div>
                         </div>
-                        <div class="author">{{ props.knowledgeInfo.userName }}</div>
+                        <div class="author" @click="goUser(props.knowledgeInfo.userId)">{{ props.knowledgeInfo.userName }}</div>
                     </div>
                     <div class="bottom">
                         <div class="tags"> <el-tag v-for="(tag, index) in props.knowledgeInfo.tagBaseInfoList" :key="index"
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="right">
-                    <el-button class="check-btn">查看</el-button>
+                    <el-button class="check-btn" @click="goKnowledge(props.knowledgeInfo.id)">查看</el-button>
                     <el-button class="delete-btn" v-if="userStore.userBaseInfo.id === Number($route.query.usercode)" @click="changeStatus">撤贴</el-button>
                 </div>
             </div>
@@ -32,6 +32,11 @@ import { reqCancelKnowledge } from '@/api/knowledge';
 import { CommonResponseData } from '@/api/knowledge/type';
 import useUserStore from '@/store/modules/user';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { useRoute, useRouter } from 'vue-router';
+
+let $router = useRouter();
+
+let $route = useRoute();
 
 let userStore = useUserStore();
 
@@ -54,6 +59,15 @@ const changeStatus = () => {
       }
   })
 }
+
+const goKnowledge = (knocode: number) => {
+    $router.push({ path: '/knowledge', query: { knocode: knocode } });
+}
+
+const goUser = (usercode: number) => {
+    $router.push({path: '/user/release', query: { usercode: usercode }});
+}
+
 </script>
 
 <style scoped lang="scss">

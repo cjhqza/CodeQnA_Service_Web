@@ -7,7 +7,7 @@
         <div class="options">
             <ul v-if="userInfoList.length > 0">
                 <li v-for="(userInfo, index) in userInfoList" :key="userInfo.id" >
-                    <div class="user">
+                    <div class="user" @click="goUser(userInfo.id)">
                         <img :src="userInfo.headImgUrl" alt="">
                         <span :title="userInfo.userName">{{ userInfo.userName }}</span>
                     </div>
@@ -27,6 +27,9 @@ import { UserInfoList, UserInfoResponseData } from '@/api/user/type';
 import { onMounted, ref } from 'vue';
 import useUserStore from '@/store/modules/user';
 import { reqRelatedUserInfo } from '@/api/user';
+import { useRouter } from 'vue-router';
+
+let $router = useRouter();
 
 let userStore = useUserStore();
 
@@ -41,6 +44,10 @@ const getRelatedUserInfo = async () => {
     if (result.code === 200) {
         userInfoList.value = result.data;
     }
+}
+
+const goUser = (usercode: number) => {
+    $router.push({path: '/user/release', query: { usercode: usercode }});
 }
 </script>
 

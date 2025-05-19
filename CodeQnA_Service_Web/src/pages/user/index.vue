@@ -73,7 +73,7 @@
                                         v-if="!userDetailInfo.userotherInfo.isFollow" @click="follow">关注</el-button>
                                     <el-button type="primary" size="large" class="otherUser-btn" v-else
                                         @click="follow">已关注</el-button>
-                                    <el-button type="success" size="large" class="otherUser-btn">私信</el-button>
+                                    <el-button type="success" size="large" class="otherUser-btn" @click="gochat(Number($route.query.usercode))">私信</el-button>
                                 </div>
                             </div>
                             <div class="user-bottom">
@@ -266,6 +266,7 @@ import { CommonResponseData, UserDetailInfo, UserDetailInfoResponseData, UserDto
 import { reqFollowUser, reqUpdateUserInfo, reqUserDetailInfo } from '@/api/user';
 import { ElMessage } from 'element-plus';
 import { FileUploadResponseData } from '@/api/upload/type';
+import { reqCreateChatById } from '@/api/chat';
 let $route = useRoute();
 let $router = useRouter();
 let userStore = useUserStore();
@@ -389,6 +390,17 @@ const submit = async () => {
     }
 }
 
+const gochat = async (userId : number) => {
+    // 创建与该用户的会话
+    let result : CommonResponseData = await reqCreateChatById(userId);
+    if (result.code === 200) {
+        // 打开会话框
+        userStore.chatBoxVisiable = true;
+    } else {
+        ElMessage.error(result.message);
+    }
+}
+
 </script>
 
 <style scoped lang="scss">
@@ -491,16 +503,25 @@ const submit = async () => {
                             min-width: 40%;
                             max-width: 100%;
                             justify-content: space-between;
+                            align-items: center;
                             margin-top: 25px;
                             font-size: 30px;
                             font-weight: 900;
                             // border: 1px solid red;
 
                             .user-name {
+                                // display: flex;
+                                // align-items: center;
+                                height: 40px;
+                                // border: 1px solid red;
                                 white-space: nowrap;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                                 max-width: 80%;
+                            }
+
+                            .user-gender {
+                                height: 40px;
                             }
                         }
 

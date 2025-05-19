@@ -7,7 +7,7 @@
         <div class="options">
             <ul v-if="userInfoList.length > 0">
                 <li v-for="(userInfo, index) in userInfoList" :key="userInfo.id" >
-                    <div class="user">
+                    <div class="user" @click="goUser(userInfo.id)">
                         <img :src="userInfo.headImgUrl" alt="">
                         <span :title="userInfo.userName">{{ userInfo.userName }}</span>
                     </div>
@@ -28,6 +28,9 @@ import { CommonResponseData, UserInfoList, UserInfoResponseData } from '@/api/us
 import { onMounted, ref } from 'vue';
 import useUserStore from '@/store/modules/user';
 import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
+
+let $router = useRouter();
 
 let userStore = useUserStore();
 
@@ -59,6 +62,10 @@ const follow = async (userId: number, index: number) => {
     } else {
         ElMessage.error(result.message);
     }
+}
+
+const goUser = (usercode: number) => {
+    $router.push({path: '/user/release', query: { usercode: usercode }});
 }
 
 </script>

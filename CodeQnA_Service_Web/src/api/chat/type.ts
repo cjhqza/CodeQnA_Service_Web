@@ -4,6 +4,10 @@ export interface ResponseData {
     message: string,
 }
 
+export interface CommonResponseData extends ResponseData {
+    data: null;
+}
+
 export interface MessageDto {
     'id': number,
     'senderId': number,

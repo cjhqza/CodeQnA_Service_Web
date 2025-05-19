@@ -102,7 +102,7 @@
                 <div class="blogger-show" v-else>
                     <div class="blogger-container" v-if="hasBloggerArr.length > 0">
                         <BloggerCard class="bloggerItem" v-for="(item, index) in hasBloggerArr" :key="index"
-                            :bloggerInfo="item" />
+                            :bloggerInfo="item" @click="goUser(item.id)" />
                     </div>
                     <el-empty v-else description="暂无数据"></el-empty>
                     <el-pagination v-model:current-page="userSearchDto.pageNum"
@@ -131,6 +131,9 @@ import { reqTagTree } from '@/api/tag';
 import { DtTag, DtTagList, TagTreeResponseData } from '@/api/tag/type';
 import { UserCbInfoResponseData, UserSearchInfoList, UserSearchPageInfoResponseData } from '@/api/user/type';
 import { reqFindByUserName, reqUserSearchInfoList } from '@/api/user';
+import { useRouter } from 'vue-router';
+
+let $router = useRouter();
 
 const index = ref<string>('1')
 
@@ -281,6 +284,10 @@ const fetchCbData = async (keyword: string, cb: any) => {
 const fetchSearchData = (item: any) => {
     userSearchDto.value.userName = item.value;
     fetchData();
+}
+
+const goUser = (usercode: number) => {
+    $router.push({path: '/user/release', query: { usercode: usercode }});
 }
 
 </script>

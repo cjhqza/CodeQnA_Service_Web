@@ -15,7 +15,7 @@
                 </div>
                 <div class="baseInfo">
                     <div class="autAndTime">
-                        <div class="author">
+                        <div class="author" @click="goUser(knowledgeInfo.userId)">
                             <img class="head" :src="knowledgeInfo.headImgUrl" alt="">
                             {{ knowledgeInfo.userName }}
                         </div>
@@ -313,6 +313,10 @@ const openReportDialog = (type: number, id: number) => {
         reportTarget.targetId = id;
         userStore.reportBoxVisiable = true;
     }
+}
+
+const goUser = (usercode: number) => {
+    $router.push({path: '/user/release', query: { usercode: usercode }});
 }
 
 const loadData = async () => {

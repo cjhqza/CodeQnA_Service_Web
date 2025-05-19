@@ -5,7 +5,7 @@
                 <div class="left">
                     <div class="top">
                         <div class="title" :title="props.knowledgeInfo.title" @click="goKnowledge(props.knowledgeInfo.id)">{{ props.knowledgeInfo.title }}</div>
-                        <div class="author">{{ props.knowledgeInfo.userName }}</div>
+                        <div class="author" @click="goUser(props.knowledgeInfo.userId)">{{ props.knowledgeInfo.userName }}</div>
                     </div>
                     <div class="bottom">
                         <div class="tags">
@@ -83,6 +83,10 @@ const formattedCreateTime = computed(() => {
 
 const goKnowledge = (knocode: number) => {
     $router.push({ path: '/knowledge', query: { knocode: knocode } });
+}
+
+const goUser = (usercode: number) => {
+    $router.push({path: '/user/release', query: { usercode: usercode }});
 }
 
 </script>
